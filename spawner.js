@@ -3,7 +3,7 @@ global.requireEsm = async function (url) {
 };
 
 global.discordJS = require("discord.js");
-global.telegramJS = require("telegram.js");
+// global.telegramJS = require("telegram.js");
 
 const originalExt = { ...require.extensions };
 const { createRequire } = require("module");
