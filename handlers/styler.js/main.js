@@ -483,9 +483,9 @@ export function applyLine(text, styling) {
       length = 0;
     }
     let line = (etc[0] !== "akhiro" ? "━" : "▱").repeat(length);
-    if (field === "whiteline") {
-      line = "";
-    }
+//     if (field === "whiteline") {
+//       line = "";
+//     }
     if (etc[0] === "inside") {
       switch (etc[1]) {
         case "x":
@@ -493,9 +493,9 @@ export function applyLine(text, styling) {
           line = `${"━".repeat(newLength)} ✕ ${"━".repeat(newLength - 1)}`;
           break;
         case "text":
-          line = `━━━ ${field} ━━━`;
+          line = `━━━━━ ${field} ━━━━━`;
           if (etc[2] === "elegant") {
-            line = `━━━【${fonts.bold(field)}】━━━`;
+            line = `✧ ━━━━⧽${fonts.bold(field)}⧼━━━━━ ✧`;
           }
           break;
       }
