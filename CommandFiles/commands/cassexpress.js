@@ -117,7 +117,6 @@ export async function entry({
         )} (+${amount})\n\n${ad}`
       );
     },
-
     async withdraw() {
       let amount =
         args[1] === "all"
