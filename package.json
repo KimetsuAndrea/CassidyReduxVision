@@ -50,7 +50,7 @@
     "string-similarity": "^4.0.4",
     "ts-node": "^10.9.2",
     "ws": "^8.17.1",
-    "ws3-fca": "^1.0.41",
+    "ws3-fca": "^1.0.46",
     "yt-search": "^2.10.4",
     "ytdl-core": "^4.11.5"
   },

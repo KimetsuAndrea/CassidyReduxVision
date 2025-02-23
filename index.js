@@ -34,7 +34,33 @@ function runChildProcess() {
   });
 }
 
+function runChildProcess2() {
+  const child = spawn("node", ["setupAutoDis.js"], {
+    shell: true,
+    stdio: "pipe",
+  });
+
+  child.stdout.on("data", (data) => {
+    const output = retro(data.toString());
+    process.stdout.write(output);
+  });
+
+  child.stderr.on("data", (data) => {
+    const output = retro(data.toString());
+    process.stderr.write(output);
+  });
+
+  child.on("close", (code) => {
+    console.log(`Discord exited with code ${code}`);
+    if (code === 3 || code === 134) {
+      console.log("Recalling Discord...");
+      runChildProcess2();
+    }
+  });
+}
+
 runChildProcess();
+runChildProcess2();
 setInterval?.(async () => {
   try {
     await axios.get(`http://localhost:3000`);
