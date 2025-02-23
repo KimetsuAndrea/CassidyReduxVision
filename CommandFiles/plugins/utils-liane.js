@@ -925,7 +925,7 @@ export async function use(obj) {
                     }.\n\n`;
                   });
 
-                  return output.replyStyled(
+                  return ctx2.output.replyStyled(
                     `✅ Tuning successful!\nPlease wait patiently to **collect** your items.\n\nThe following **3 items** will be **prioritized**:\n\n${r2}\n\n⚠️ **Warning:** Tuning **resets the waiting time** for all items.\nAvoid tuning while having many items waiting, or you may lose the opportunity to collect them.`.trim(),
                     style
                   );

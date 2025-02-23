@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const MEMORY_THRESHOLD = 500;
 const WARNING_THRESHOLD = MEMORY_THRESHOLD * 0.75;
+import { registeredExtensions } from "./CommandFiles/modules/cassXTensions.ts";
 
 import cors from "cors";
 
@@ -263,6 +264,7 @@ async function loadAllCommands(callback = async () => {}) {
   Object.keys(require.cache).forEach((i) => {
     delete require.cache[i];
   });
+  await registeredExtensions.downloadRemoteExtensions();
 
   const commandPromises = fileNames.map(async (fileName) => {
     try {

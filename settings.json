@@ -38,7 +38,7 @@
   "EXTRAPREFIX": ["@"],
   "MODERATORBOT": ["wss:superModerator", "100051724779220", "100075058221244"],
   "exitOnError": false,
-  "WEB_PASSWORD": "lialiaXCR",
+  "WEB_PASSWORD": "x64",
   "maintenanceMode": false,
   "noLevelUI": false
 }

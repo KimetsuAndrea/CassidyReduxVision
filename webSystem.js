@@ -47,7 +47,7 @@ export class Listener {
     this.callback = callback;
     try {
       handleWebSocket(this.wss, this.callback);
-      await createDiscordListener(this.callback);
+      // await createDiscordListener(this.callback);
       // await tphHandler(this.callback);
     } catch (error) {
       console.log(error);

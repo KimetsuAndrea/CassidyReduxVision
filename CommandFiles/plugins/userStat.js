@@ -16,7 +16,7 @@ class CassEncoder {
         .replace(/\+/g, "0")
         .replace(/\//g, "1")
         .replace(/=/g, "");
-      
+
       return `web:${encodedID}`;
     } catch (error) {
       return id;
@@ -28,15 +28,15 @@ class CassEncoder {
       if (!encodedID.startsWith("web:")) {
         return encodedID;
       }
-      
+
       const base64String = encodedID.slice(4);
-      
+
       const padding = (4 - (base64String.length % 4)) % 4;
       const paddedBase64String = base64String + "=".repeat(padding);
       const decodedBuffer = Buffer.from(paddedBase64String, "base64");
       const decodedID = decodedBuffer.toString("utf-8");
-      
-      return decodedID.replace(/^custom_/, '');
+
+      return decodedID.replace(/^custom_/, "");
     } catch (error) {
       return encodedID;
     }
@@ -65,7 +65,6 @@ class UserStatsLocal {
     this.modifiedProperties = {};
   }
 
-  
   process(data) {
     data ??= {};
     data.money ??= 0;
@@ -74,7 +73,8 @@ class UserStatsLocal {
       data.money = Number.MAX_SAFE_INTEGER;
     }
     data.battlePoints ??= 0;
-    data.battlePoints = data.battlePoints <= 0 ? 0 : parseInt(data.battlePoints);
+    data.battlePoints =
+      data.battlePoints <= 0 ? 0 : parseInt(data.battlePoints);
     data.exp ??= 0;
     data.inventory ??= [];
     if (isNaN(data.exp)) {
@@ -88,22 +88,33 @@ class UserStatsLocal {
 
   calcMaxBalance(users, specificID) {
     const balances = Object.keys(users)
-      .filter(id => id !== specificID)
-      .map(id => users[id].money);
+      .filter((id) => id !== specificID)
+      .map((id) => users[id].money);
 
-    const totalBalance = balances.reduce((sum, balance) => parseInt(sum) + balance, 0);
+    const totalBalance = balances.reduce(
+      (sum, balance) => parseInt(sum) + balance,
+      0
+    );
     return Math.floor(10 * (totalBalance / balances.length));
   }
 
   get(key) {
     key = CassEncoder.decodeID(key);
-    return JSON.parse(JSON.stringify(this.process(this.objectData[key] || { ...this.defaults, lastModified: Date.now() })));
+    return JSON.parse(
+      JSON.stringify(
+        this.process(
+          this.objectData[key] || { ...this.defaults, lastModified: Date.now() }
+        )
+      )
+    );
   }
 
   deleteUser(key) {
     key = CassEncoder.decodeID(key);
     if (this.objectData[key]) {
-      this.modifiedProperties[key] = JSON.parse(JSON.stringify(this.objectData[key]));
+      this.modifiedProperties[key] = JSON.parse(
+        JSON.stringify(this.objectData[key])
+      );
     }
     delete this.objectData[key];
   }
@@ -122,7 +133,11 @@ class UserStatsLocal {
   set(key, updatedProperties = {}) {
     key = CassEncoder.decodeID(key);
     const user = this.get(key);
-    const updatedUser = { ...user, ...updatedProperties, lastModified: Date.now() };
+    const updatedUser = {
+      ...user,
+      ...updatedProperties,
+      lastModified: Date.now(),
+    };
     this.objectData[key] = updatedUser;
     this.modifiedProperties[key] = JSON.parse(JSON.stringify(updatedUser));
   }
@@ -130,7 +145,9 @@ class UserStatsLocal {
   getAll() {
     const result = {};
     for (const key in this.objectData) {
-      result[CassEncoder.encodeID(key)] = JSON.parse(JSON.stringify(this.process(this.objectData[key])));
+      result[CassEncoder.encodeID(key)] = JSON.parse(
+        JSON.stringify(this.process(this.objectData[key]))
+      );
     }
     return result;
   }
@@ -138,11 +155,13 @@ class UserStatsLocal {
   toLeanObject() {
     const resultObj = {};
     for (const key in this.objectData) {
-      resultObj[CassEncoder.encodeID(key)] = JSON.parse(JSON.stringify(this.objectData[key]));
+      resultObj[CassEncoder.encodeID(key)] = JSON.parse(
+        JSON.stringify(this.objectData[key])
+      );
     }
     return resultObj;
   }
-        }
+}
 
 import UserInfo from "../resources/userInfo/utils.js";
 import CurrencyHandler from "../resources/balance/utils.js";
@@ -227,8 +246,7 @@ export async function use(obj) {
       const { databaseData = {} } = event;
       obj.money = new UserStatsLocal(JSON.parse(JSON.stringify(databaseData)));
     } else {
-      
-  obj.money = global.handleStat;
+      obj.money = global.handleStat;
     }
   }
   obj.userState = userState;

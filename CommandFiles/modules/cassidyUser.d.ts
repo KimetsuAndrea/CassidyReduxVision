@@ -127,6 +127,8 @@ declare module "cassidy-userData" {
     shopInv: { [key: string]: boolean };
     boxItems: InventoryItem[];
     battlePoints: number;
+    extensionIDs?: string[];
+    [key: string]: any;
   };
 
   type NullableUserData = {

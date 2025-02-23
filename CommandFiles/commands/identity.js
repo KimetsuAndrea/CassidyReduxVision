@@ -1,5 +1,6 @@
 import { ReduxCMDHome } from "../modules/reduxCMDHome.js";
 import { UNIRedux } from "../modules/unisym.js";
+import { PasteClient } from "pastebin-api";
 
 export const meta = {
   name: "identity",
@@ -224,6 +225,40 @@ const home = new ReduxCMDHome(
         const result = `There are **${formattedUserCount}** users in the **Cassidy Chatbot System.**\n\n${statsResult}`;
 
         output.reply(result);
+      },
+    },
+    {
+      key: "download",
+      description: "Uploads your data and sends a Pastebin URL.",
+      aliases: ["-bin"],
+      args: ["<optional_id>"],
+      async handler({ input, output, money, args }) {
+        const ID = args.length > 0 ? args[0] : input.detectID || input.senderID;
+
+        const userData = await money.get(ID);
+
+        if (!userData.name) {
+          return output.reply(`User not found.`);
+        }
+        const fileContent = JSON.stringify(userData, null, 2);
+
+        try {
+          const client = new PasteClient("R02n6-lNPJqKQCd5VtL4bKPjuK6ARhHb");
+          const url = await client.createPaste({
+            code: fileContent,
+            expireDate: "N",
+            format: "json",
+            name: `${ID}.json`,
+            publicity: 1,
+          });
+          const raw = url.replaceAll("pastebin.com/", "pastebin.com/raw/");
+
+          return output.reply(
+            `✅ | Uploaded to Pastebin!\n\n**Name:** ${userData.name}\n**URL:** ${raw}`
+          );
+        } catch (error) {
+          return output.error(error);
+        }
       },
     },
   ]
