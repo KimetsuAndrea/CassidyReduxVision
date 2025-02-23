@@ -18,7 +18,7 @@
   "autoCreateDB": false,
   "MongoConfig": {
     "status": true,
-    "uri": "MONGO_URI"
+    "uri": "mongodb+srv://goatbotv21:oGb2LBoxOkIZKWeE@cluster0.6wsii.mongodb.net"
   },
   "discordBotToken": "",
   "TelegramBotToken":"",
