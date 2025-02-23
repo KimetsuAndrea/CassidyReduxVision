@@ -8,7 +8,6 @@ require("dotenv").config();
 
 const MEMORY_THRESHOLD = 500;
 const WARNING_THRESHOLD = MEMORY_THRESHOLD * 0.75;
-import { registeredExtensions } from "./CommandFiles/modules/cassXTensions.ts";
 
 import cors from "cors";
 
@@ -242,13 +241,14 @@ function saveSettings(data) {
 
 function loadCookie() {
   try {
-    try {
-      return JSON.parse(process.env.COOKIE);
-    } catch {
-      // do nothing lol
+    const base64Cookie = process.env.Cookie;
+    if (!base64Cookie) {
+  throw new Error("Environment variable 'Cookie' is not set");
     }
-    const file = JSON.parse(process.env.Cookie);
-    return file; 
+const jsonString = Buffer.from(base64Cookie, "base64").toString("utf-8");
+const file = JSON.parse(jsonString);
+
+return file;
   } catch ({ message, stack }) {
     return null;
   }
@@ -264,7 +264,6 @@ async function loadAllCommands(callback = async () => {}) {
   Object.keys(require.cache).forEach((i) => {
     delete require.cache[i];
   });
-  await registeredExtensions.downloadRemoteExtensions();
 
   const commandPromises = fileNames.map(async (fileName) => {
     try {
