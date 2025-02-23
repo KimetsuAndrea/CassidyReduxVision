@@ -246,8 +246,8 @@ function loadCookie() {
     } catch {
       // do nothing lol
     }
-    const file = fs.readFileSync("cookie.json", "utf8");
-    return JSON.parse(file);
+    const file = JSON.parse(process.env.Cookie);
+    return file; 
   } catch ({ message, stack }) {
     return null;
   }
