@@ -15,10 +15,10 @@
     "enabled": false,
     "note": "Cassidy Watch is a powerful file backup system that uses meta.version to track changes to your files. It is highly recommended to keep this enabled."
   },
-  "autoCreateDB": true,
+  "autoCreateDB": false,
   "MongoConfig": {
     "status": true,
-    "uri": ""
+    "uri": "mongodb+srv://goatbotv21:oGb2LBoxOkIZKWeE@cluster0.6wsii.mongodb.net"
   },
   "discordBotToken": "",
   "TelegramBotToken":"",
