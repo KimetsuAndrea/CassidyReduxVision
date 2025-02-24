@@ -493,9 +493,9 @@ export function applyLine(text, styling) {
           line = `${"━".repeat(newLength)} ✕ ${"━".repeat(newLength - 1)}`;
           break;
         case "text":
-          line = `━━━━━ ${field} ━━━━━`;
+          line = `━━━ ${field} ━━━`;
           if (etc[2] === "elegant") {
-            line = `✧ ━━━━⧽${fonts.bold(field)}⧼━━━━━ ✧`;
+            line = `━━━【${fonts.bold(field)}】━━━`;
           }
           break;
       }
