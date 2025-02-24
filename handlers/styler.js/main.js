@@ -483,9 +483,9 @@ export function applyLine(text, styling) {
       length = 0;
     }
     let line = (etc[0] !== "akhiro" ? "━" : "▱").repeat(length);
-//     if (field === "whiteline") {
-//       line = "";
-//     }
+    if (field === "whiteline") {
+      line = "";
+    }
     if (etc[0] === "inside") {
       switch (etc[1]) {
         case "x":
